@@ -2,6 +2,9 @@
 
 <template>
   <section class="todoapp">
+    <fullscreen :fullscreen.sync="fullscreen" background="#fac78f">
+      DatVL
+    </fullscreen>
     <!-- header -->
     <header class="header">
       <h1>todos</h1>
@@ -51,6 +54,7 @@
 <script>
 import { mapActions } from 'vuex'
 import TodoItem from './TodoItem.vue'
+import fullscreen from 'vue-fullscreen'
 
 const filters = {
   all: todos => todos,
@@ -59,11 +63,12 @@ const filters = {
 }
 
 export default {
-  components: { TodoItem },
+  components: { TodoItem, fullscreen },
   data () {
     return {
       visibility: 'all',
-      filters: filters
+      filters: filters,
+      fullscreen: false,
     }
   },
   computed: {
@@ -71,6 +76,7 @@ export default {
       return this.$store.state.todos
     },
     allChecked () {
+      this.fullscreen = true;
       return this.todos.every(todo => todo.done)
     },
     filteredTodos () {
@@ -86,11 +92,16 @@ export default {
       'clearCompleted'
     ]),
     addTodo (e) {
+      this.fullscreen = true;
       const text = e.target.value
       if (text.trim()) {
         this.$store.dispatch('addTodo', text)
       }
       e.target.value = ''
+      this.toggle()
+    },
+    toggle () {
+      this.fullscreen = !this.fullscreen
     }
   },
   filters: {

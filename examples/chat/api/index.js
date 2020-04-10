@@ -8,8 +8,8 @@ export function getAllMessages (cb) {
 }
 
 export function createMessage ({ text, thread }, cb) {
-  const timestamp = Date.now()
-  const id = 'm_' + timestamp
+  const timestamp = Date.now();
+  const id = 'm_' + timestamp;
   const message = {
     id,
     text,
